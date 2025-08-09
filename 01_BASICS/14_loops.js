@@ -2,7 +2,7 @@
 // for...of is mainly used to iterate through iterable objects like arrays, strings, maps, sets.
 
 // Example 1: Iterating through an array
-// let arr = ["Aryan", "Anish", "pranav", "manav"]
+let arr = ["Aryan", "Anish", "pranav", "manav"]
 // for (const item of arr) {
 //     console.log(item);  // Prints each element of the array
 // }
@@ -22,6 +22,7 @@ maps.set("py", "python") // Duplicate keys are ignored in Map
 maps.set("rb", "ruby")
 
 // Iterating through Map using for...of
+// console.log(maps)
 // for (const [key, value] of maps) {
 //     console.log(`${key} stands for ${value}`)
 // }
@@ -43,16 +44,16 @@ const movies = {
     "movie2": "batman"
 }
 
-for (const key in movies) {
-    // key → property name, movies[key] → value of that property
-    console.log(`${key} and value is ${movies[key]}`)
-}
+// for (const key in movies) {
+//     // key → property name, movies[key] → value of that property
+//     console.log(`${key} and value is ${movies[key]}`)
+// }
 
 // ---------------------- forEach loop ----------------------
 // forEach is used for arrays and takes a callback function
 // Callback receives: (currentItem, index, entireArray)
 const coding = ["js", "ruby", "cpp", "python"]
 
-coding.forEach((item, index, arr) => {
-    console.log(item, index, arr)
-})
+// coding.forEach((item, index, arr) => {
+//     console.log(item, index, arr)
+// })
