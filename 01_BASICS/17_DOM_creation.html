@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- Character encoding -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes page responsive -->
+    <title>Document</title>
+</head>
+<body>
+    <!-- Parent div containing multiple child divs (days of the week) -->
+    <div class="parent">
+        <div class="day">Monday</div>
+        <div class="day">Tuesday</div>
+        <div class="day">Wednesday</div>
+        <div class="day">Thursday</div>
+        <div class="day">Friday</div>
+    </div>
+
+    <script>
+        // Select the parent div
+        const parent = document.querySelector(".parent")
+        console.log(parent); // Logs the parent element itself
+        console.log(parent.children); // HTMLCollection of all child elements with class 'day'
+        
+        // Loop through children and log their inner HTML (day names)
+        for (let i = 0; i < parent.children.length; i++) {
+            console.log(parent.children[i].innerHTML)
+        }
+        
+        // Access the first and last child elements
+        console.log(parent.firstElementChild); // First day (Monday)
+        console.log(parent.lastElementChild);  // Last day (Friday)
+        
+        // Select the first element with class 'day'
+        const dayOne = document.querySelector(".day")
+        console.log(dayOne.parentElement); // Logs the parent element (.parent div)
+        console.log(dayOne.nextElementSibling); // Logs Tuesday's div (next sibling)
+        
+        // Logs all child nodes including text nodes (line breaks, spaces)
+        console.log(parent.childNodes);
+        
+        // ---------------- Creating and Adding a New Element ----------------
+        let div = document.createElement("div") // Create a new <div>
+        div.className = "main" // Assign a class
+        div.style.backgroundColor = "yellow" // Styling background
+        div.style.padding = "12px" // Add padding
+        
+        // div.innerText = "Aryan Arora" 
+        // (This works but is less recommended if you want to avoid extra parsing)
+        
+        // Better: Create a text node and append it to the div
+        const addText = document.createTextNode("Aryan Arora")
+        div.appendChild(addText) // Add text to new div
+        
+        // Append the new div to the <body>
+        document.body.appendChild(div)
+    </script>
+</body>
+</html>
