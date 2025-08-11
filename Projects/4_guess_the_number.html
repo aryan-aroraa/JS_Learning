@@ -26,17 +26,17 @@
             font-size: 18px;
         }
         form{
-            margin-top: 100px;
+            margin-top: 50px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
         }
         form label{
-            font-size: 60px;
+            font-size: 40px;
         }
         form input{
-            font-size: 40px;
+            font-size: 20px;
             border-radius: 10px;
         }
         form input[type="text"]{
@@ -51,10 +51,10 @@
         #lowOrHigh{
             margin: 20px;
             font-size: 30px;
-            color: rgb(240, 255, 32);
+            color: #f0ff20;
         }
         .info{
-            margin: 30px;
+            /* margin: 30px; */
             display: flex;
             flex-direction: column;
             gap: 5px;
@@ -66,7 +66,6 @@
             border-radius: 5px;
         }
         .err-msg{
-            font-size: 20px;
             color: rgb(255, 60, 60);
         }
     </style>
@@ -82,16 +81,106 @@
             <input type="text" id="guessField">
             <input type="submit" id="submitBtn" value="Submit Guess">
         </form>
-        <p id="lowOrHigh">Think lower</p>
+        <p id="lowOrHigh"></p>
         <div class="info">
             <p>Previous guesses: <span id="prevGuess"></span></p>
-            <p>Attempts left: <span id="attempts">10</span></p>
+            <p>Attempts left: <span id="attempts"></span></p>
         </div>
-        <p class="err-msg">this is a error msg</p>
+        <p class="err-msg"></p>
     </div>
 
 </body>
 <script>
+    let randomNumber = Math.floor(Math.random() * 100 + 1);
+    
+    let prevGuessList = []
+    let guessNum = 10;
+    let playGame = true
 
+    let submit = document.querySelector("#submitBtn")
+    const userInput = document.querySelector("#guessField")
+    const errorMsg = document.querySelector(".err-msg")
+    const lowOrHigh = document.querySelector("#lowOrHigh")
+    const attempts = document.querySelector("#attempts")
+    const prevGuess = document.querySelector("#prevGuess")
+    let info = document.querySelector(".info")
+    let p = document.createElement("p")
+    attempts.innerHTML = guessNum
+
+    if(playGame){
+        submit.addEventListener("click", (e) => {
+            e.preventDefault();
+            let guess = parseInt(userInput.value)
+            validateGuess(guess);
+        })
+    }
+
+    function validateGuess(guess){
+        if (isNaN(guess)) {
+            errorMsg.innerHTML = "Please input a valid number"
+        }
+        else if(guess < 1 || guess > 100){
+            errorMsg.innerHTML = "Number should be in the range 1-100"
+        }
+        else{
+            errorMsg.innerHTML = ""
+            userInput.value = ""
+            guessSlot(guess)
+            guessNum--
+            attempts.innerHTML = guessNum
+            if (guessNum < 1) {
+                lowOrHigh.innerHTML = `Random number was ${randomNumber}`
+                lowOrHigh.style.color = "red"   
+                endGame()
+            }
+            else{
+                checkGuess(guess)
+            }
+        }
+    }
+    function guessSlot(guess){
+        prevGuessList.push(guess)
+        prevGuess.innerHTML = prevGuessList
+    }
+    function checkGuess(guess){        
+        if (guess === randomNumber) {
+            lowOrHigh.innerHTML = `Correct! Random number was ${randomNumber}`
+            lowOrHigh.style.color = "#00db04"
+            endGame()
+        }
+        else if(guess > randomNumber){
+            lowOrHigh.innerHTML = "Think lower!"
+        }
+        else{
+            lowOrHigh.innerHTML = "Think higher!"
+        }
+    }
+
+    function endGame(){
+        userInput.setAttribute("disabled", "")
+        submit.setAttribute("disabled", "")
+        playGame = false
+        p.classList.add('button');
+        p.innerHTML = `<h2 id="newGame">Start new Game</h2>`;
+        p.style.cursor = "pointer"
+        info.appendChild(p)
+        newGame()
+    }
+    function newGame(){
+        const newGameButton = document.querySelector('#newGame');
+        newGameButton.addEventListener("click", () => {
+            randomNumber = parseInt(Math.random() * 100 + 1);
+            prevGuessList = [];
+            guessNum = 10
+            attempts.innerHTML = guessNum
+            prevGuess.innerHTML = ""
+            userInput.removeAttribute("disabled")
+            submit.removeAttribute("disabled")
+            info.removeChild(p)
+
+            lowOrHigh.innerHTML = ""
+            lowOrHigh.style.color = "#f0ff20"
+        })
+    }
 </script>
 </html>
